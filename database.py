@@ -8,18 +8,18 @@ from models import Items, Weapons, Potions, Mobs, Locations
 
 # Items - This block contains all the items in the game.
 
-arc_en_Ciel = Weapons("Арк_ан_Сиэль", "id:arc_en_ciel","right_hand", 1, 150)
+arc_en_Ciel = Weapons("Арк_ан_Сиэль", "id:arc_en_ciel", 1, "right_hand", 150)
 
-small_healing_potion = Potions("Зелье Востановления 1", "id:small_healing_potion", "None", 10, 5)
+small_healing_potion = Potions("Зелье Востановления 1", "id:small_healing_potion", 10, None, 5)
 
-normal_healing_potion = Potions("Зелье Востановления 2", "id:normal_healing_potion", "None", 5, 8)
+normal_healing_potion = Potions("Зелье Востановления 2", "id:normal_healing_potion", 5, None, 8)
 
-big_small_healing_potion = Potions("Зелье Востановления 3", "id:big_healing_potion", "None", 3, 15)
+big_small_healing_potion = Potions("Зелье Востановления 3", "id:big_healing_potion", 3, None, 15)
 
 
 
 # Mobs - This block contains all the mobs in the game.
 
-slime = Mobs("Слизень", "id:mob_slime", 5, 2, "aggressive")
-big_slime = Mobs("Большой Слизень", "id:mob_big_slime", 10, 8, "aggressive")
+slime = Mobs("Слизень", "id:mob_slime", 5, 2, "aggressive", ["id:small_healing_potion"])
+big_slime = Mobs("Большой Слизень", "id:mob_big_slime", 10, 8, "aggressive", None)
 

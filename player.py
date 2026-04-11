@@ -1,7 +1,7 @@
 class Player:
     def __init__(self, name):
         self.name = name
-        self.hp = 21
+        self.hp = 20
         self.max_hp = 20
         self.endurance = 100
         self.max_endurace = 100
@@ -11,6 +11,7 @@ class Player:
         self.exp_mana = 0
         self.max_exp_mana = 1
         self.damage = 1
+        self.crit_chance = 0.10
         self.defense = 0
         self.lvl_player = 1
         self.exp_lvl_player = 0
