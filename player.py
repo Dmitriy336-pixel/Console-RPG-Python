@@ -1,6 +1,6 @@
 class Player:
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, player_name):
+        self.player_name = player_name
         self.hp = 20
         self.max_hp = 20
         self.endurance = 100

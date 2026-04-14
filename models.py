@@ -6,13 +6,15 @@ class Items():
         self.item_slots = item_slots
         
 class Mobs():
-    def __init__(self, mob_name, mob_id, mob_hp, mob_damage, mob_behavior, mob_loot_table):
+    def __init__(self, mob_name, mob_id, mob_hp, mob_max_hp, mob_damage, mob_behavior, mob_loot_table, mob_loot_exp):
         self.mob_name = mob_name
         self.mob_id = mob_id
         self.mob_hp = mob_hp
+        self.mob_max_hp = mob_max_hp
         self.mob_damage = mob_damage
         self.mob_behavior = mob_behavior
         self.mob_loot_table = mob_loot_table
+        self.mob_loot_exp = mob_loot_exp
         
 class Weapons(Items):
     def __init__(self, item_name, item_id, item_stacks, item_slots, item_damage):
