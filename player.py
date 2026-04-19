@@ -26,6 +26,31 @@ class Player:
         
         self.skills = []
         
-        self.backpack = []
+        self.backpack = {}
         
         self.inventory = []
+        
+    def to_dict(self):
+        return{
+        "name": self.player_name,
+        "hp": self.hp,
+        "max_hp": self.max_hp,
+        "endurance": self.endurance,
+        "max_endurace": self.max_endurace,
+        "max_mana": self.max_mana,
+        "mana": self.mana,
+        "lvl_mana": self.lvl_mana,
+        "exp_mana": self.exp_mana,
+        "max_exp_mana": self.max_exp_mana,
+        "damage": self.damage,
+        "crit_chance": self.crit_chance,
+        "defense": self.defense,
+        "lvl_player": self.lvl_player,
+        "exp_lvl_player": self.exp_lvl_player,
+        "max_exp_lvl_player": self.max_exp_lvl_player,
+        "equipment": self.equipment,
+        "spells": self.spells,
+        "skills": self.skills,
+        "backpack": self.backpack,
+        "inventory": self.inventory
+    }
