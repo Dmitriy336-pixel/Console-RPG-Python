@@ -5,7 +5,6 @@ import database
 import player
 
 
-
 def lvl_up(player):
     if player.exp_lvl_player >= player.max_exp_lvl_player:
         # Вычитаем потраченный опыт, чтобы остаток пошел на следующий уровень
@@ -149,7 +148,7 @@ def load_game():
             new_hero.hp = data["hp"]
             new_hero.max_hp = data["max_hp"]
             new_hero.endurance = data["endurance"]
-            new_hero.max_endurace = data["max_endurace"]
+            new_hero.max_endurance = data["max_endurance"]
             new_hero.max_mana = data["max_mana"]
             new_hero.mana = data["mana"]
             new_hero.lvl_mana = data["lvl_mana"]
@@ -165,7 +164,7 @@ def load_game():
             new_hero.spells = data["spells"]
             new_hero.skills = data["skills"]
             new_hero.backpack = data["backpack"]
-            new_hero.inventory = data["inventory"]
+            
             return new_hero
     except json.JSONDecodeError:
         print("Ошибка: Файл сохранения поврежден!")

@@ -1,9 +1,9 @@
 {
-    "name": "лол",
-    "hp": 4,
+    "name": "авп",
+    "hp": 20,
     "max_hp": 20,
     "endurance": 100,
-    "max_endurace": 100,
+    "max_endurance": 100,
     "max_mana": 1,
     "mana": 1,
     "lvl_mana": 1,
@@ -13,7 +13,7 @@
     "crit_chance": 0.1,
     "defense": 0,
     "lvl_player": 1,
-    "exp_lvl_player": 6,
+    "exp_lvl_player": 0,
     "max_exp_lvl_player": 10,
     "equipment": {
         "right_hand": null,
@@ -23,8 +23,5 @@
     },
     "spells": [],
     "skills": [],
-    "backpack": {
-        "id:small_healing_potion": 2
-    },
-    "inventory": []
+    "backpack": {}
 }

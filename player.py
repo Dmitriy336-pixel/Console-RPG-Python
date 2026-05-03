@@ -4,7 +4,7 @@ class Player:
         self.hp = 20
         self.max_hp = 20
         self.endurance = 100
-        self.max_endurace = 100
+        self.max_endurance = 100
         self.max_mana = 1
         self.mana = 1
         self.lvl_mana = 1
@@ -28,7 +28,7 @@ class Player:
         
         self.backpack = {}
         
-        self.inventory = []
+        
         
     def to_dict(self):
         return{
@@ -36,7 +36,7 @@ class Player:
         "hp": self.hp,
         "max_hp": self.max_hp,
         "endurance": self.endurance,
-        "max_endurace": self.max_endurace,
+        "max_endurance": self.max_endurance,
         "max_mana": self.max_mana,
         "mana": self.mana,
         "lvl_mana": self.lvl_mana,
@@ -51,6 +51,6 @@ class Player:
         "equipment": self.equipment,
         "spells": self.spells,
         "skills": self.skills,
-        "backpack": self.backpack,
-        "inventory": self.inventory
+        "backpack": self.backpack
+        
     }
