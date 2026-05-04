@@ -12,14 +12,14 @@ def lvl_up(player):
         
         player.lvl_player += 1
         player.max_hp += 2
-        player.max_endurace += 50
+        player.max_endurance += 50
         player.damage += 1
         player.defense += 1
         player.max_exp_lvl_player += 50
         
         # Полное исцеление при повышении уровня (по желанию)
         player.hp = player.max_hp
-        player.endurace = player.max_endurace
+        player.endurace = player.max_endurance
         
         print(f"--- УРОВЕНЬ ПОВЫШЕН! Теперь у вас {player.lvl_player} лвл ---")
         
@@ -31,7 +31,9 @@ def calculate_damage_player(damage, crit_chance):
         return damage * 2
     return damage
 
-
+def random_mob(mob_id):
+    if random.random():
+        mob_id 
 
 # Функция применения урона к мобу
 def damage_of_mobs(mob_id, total_damage, player):
@@ -48,11 +50,12 @@ def damage_of_mobs(mob_id, total_damage, player):
         lvl_up(player)
         
         # Если лут есть, показываем его
-        if mob_id.mob_loot_table != "None":
+        if mob_id.mob_loot_table is not None:
             print(f"Вы получили: {mob_id.mob_loot_table}")
             for item in mob_id.mob_loot_table:
     # Вызываем функцию, которую мы написали для словаря
                 add_items_backpack(player, item)
+                
     else:
         # Если моб выжил, просто пишем остаток здоровья
         print(f"Существо {mob_id.mob_name} получило {total_damage} урона!")

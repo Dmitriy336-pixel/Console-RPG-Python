@@ -1,20 +1,20 @@
 {
-    "name": "авп",
-    "hp": 20,
-    "max_hp": 20,
+    "name": "па",
+    "hp": 44,
+    "max_hp": 44,
     "endurance": 100,
-    "max_endurance": 100,
+    "max_endurance": 200,
     "max_mana": 1,
     "mana": 1,
     "lvl_mana": 1,
     "exp_mana": 0,
     "max_exp_mana": 1,
-    "damage": 1,
+    "damage": 5,
     "crit_chance": 0.1,
-    "defense": 0,
-    "lvl_player": 1,
-    "exp_lvl_player": 0,
-    "max_exp_lvl_player": 10,
+    "defense": 2,
+    "lvl_player": 3,
+    "exp_lvl_player": 2,
+    "max_exp_lvl_player": 110,
     "equipment": {
         "right_hand": null,
         "left_hand": null,
@@ -23,5 +23,7 @@
     },
     "spells": [],
     "skills": [],
-    "backpack": {}
+    "backpack": {
+        "id:small_healing_potion": 4
+    }
 }
