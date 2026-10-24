@@ -28,6 +28,8 @@ class Player:
         
         self.backpack = {}
         
+        self.current_location = "forest"
+        
         
         
     def to_dict(self):
@@ -51,6 +53,6 @@ class Player:
         "equipment": self.equipment,
         "spells": self.spells,
         "skills": self.skills,
-        "backpack": self.backpack
-        
+        "backpack": self.backpack,
+        "current_location": self.current_location
     }

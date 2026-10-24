@@ -1,22 +1,22 @@
 {
-    "name": "па",
-    "hp": 44,
-    "max_hp": 44,
-    "endurance": 100,
-    "max_endurance": 200,
+    "name": "loolok",
+    "hp": 38,
+    "max_hp": 38,
+    "endurance": 550,
+    "max_endurance": 550,
     "max_mana": 1,
     "mana": 1,
     "lvl_mana": 1,
     "exp_mana": 0,
     "max_exp_mana": 1,
-    "damage": 5,
+    "damage": 10,
     "crit_chance": 0.1,
-    "defense": 2,
-    "lvl_player": 3,
-    "exp_lvl_player": 2,
-    "max_exp_lvl_player": 110,
+    "defense": 9,
+    "lvl_player": 10,
+    "exp_lvl_player": 222,
+    "max_exp_lvl_player": 460,
     "equipment": {
-        "right_hand": null,
+        "right_hand": "id:arc_en_ciel",
         "left_hand": null,
         "body_armor": null,
         "head_armor": null
@@ -24,6 +24,8 @@
     "spells": [],
     "skills": [],
     "backpack": {
-        "id:small_healing_potion": 4
-    }
+        "id:arc_en_ciel": 7,
+        "id:small_healing_potion": 138
+    },
+    "current_location": "forest"
 }

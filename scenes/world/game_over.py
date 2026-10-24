@@ -1,18 +1,21 @@
 import engine
-
+from ui import ui
 def run(player):
-    print("\n=== ГЕРОЙ ПАЛ В БОЮ ===")
+    ui.title("\n=== ГЕРОЙ ПАЛ В БОЮ ===")
 
-    choice = input("Загрузить последнее сохранение или выйти? (Загрузить / Выйти): ").lower().strip()
+    choice = ui.choose("Загрузить последнее сохранение или выйти:",[
+        ("Загрузиться","load"),
+        ("Выйти в главное меню","exit"),
+        ])
 
-    if choice == "загрузить":
+    if choice == "load":
         loaded = engine.load_game()
         if loaded:
             player.__dict__.update(loaded.__dict__)
-            print("Сохранение загружено!")
+            ui.say("Сохранение загружено!")
             return "forest"
         else:
-            print("Файл сохранения не найден.")
+            ui.say("Файл сохранения не найден.")
             return None
 
     return None  # выход в главное меню

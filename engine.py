@@ -3,6 +3,9 @@ import json
 import models
 import database
 import player
+import os
+from ui import ui
+
 
 
 def lvl_up(player):
@@ -19,21 +22,19 @@ def lvl_up(player):
         
         # Полное исцеление при повышении уровня (по желанию)
         player.hp = player.max_hp
-        player.endurace = player.max_endurance
+        player.endurance = player.max_endurance
         
-        print(f"--- УРОВЕНЬ ПОВЫШЕН! Теперь у вас {player.lvl_player} лвл ---")
+        ui.title(f"--- УРОВЕНЬ ПОВЫШЕН! Теперь у вас {player.lvl_player} лвл ---")
         
 
 #function damage and player
 def calculate_damage_player(damage, crit_chance):
     if random.random() < crit_chance:
-        print ("Нанесен критичческий урон!")
+        ui.say ("Нанесен критичческий урон!")
         return damage * 2
     return damage
 
-def random_mob(mob_id):
-    if random.random():
-        mob_id 
+
 
 # Функция применения урона к мобу
 def damage_of_mobs(mob_id, total_damage, player):
@@ -43,52 +44,58 @@ def damage_of_mobs(mob_id, total_damage, player):
     # 2. Проверяем, осталось ли HP
     if mob_id.mob_hp <= 0:
         mob_id.mob_hp = 0
-        print(f"Существо {mob_id.mob_name} получило {total_damage} урона!")
-        print(f"Существо {mob_id.mob_name} было убито!")
-        print(f"Вы получили: {mob_id.mob_loot_exp} опыта!")
+        ui.say(f"Существо {mob_id.mob_name} получило {total_damage} урона!")
+        ui.say(f"Существо {mob_id.mob_name} было убито!")
+        ui.say(f"Вы получили: {mob_id.mob_loot_exp} опыта!")
         player.exp_lvl_player += mob_id.mob_loot_exp 
         lvl_up(player)
         
         # Если лут есть, показываем его
-        if mob_id.mob_loot_table is not None:
-            print(f"Вы получили: {mob_id.mob_loot_table}")
-            for item in mob_id.mob_loot_table:
-    # Вызываем функцию, которую мы написали для словаря
-                add_items_backpack(player, item)
+        drops = roll_loot(mob_id)
+        if drops:
+            names = ", ".join(f"{database.item_name(i)} x{n}" for i, n in drops.items())
+            ui.say(f"Вы получили: {names}")
+            for item_id, n in drops.items():
+                add_items_backpack(player, item_id, n)
+
                 
     else:
         # Если моб выжил, просто пишем остаток здоровья
-        print(f"Существо {mob_id.mob_name} получило {total_damage} урона!")
-        print(f"У существа {mob_id.mob_name} осталось: {mob_id.mob_hp} хп!")
+        ui.say(f"Существо {mob_id.mob_name} получило {total_damage} урона!")
+        ui.say(f"У существа {mob_id.mob_name} осталось: {mob_id.mob_hp} хп!")
 
 
 #function damage and mob
 def damage_of_player(mob_id, player):
     player.hp -= mob_id.mob_damage
-    print (f"Существо {player.player_name} получило {mob_id.mob_damage} урона!")
-    print(f"У существа {player.player_name} осталось: {player.hp} хп!")
+    ui.say (f"Существо {player.player_name} получило {mob_id.mob_damage} урона!")
+    ui.say(f"У существа {player.player_name} осталось: {player.hp} хп!")
     if player.hp <= 0:
         player.hp = 0
-        print ("вы погибли!")
+        ui.say ("вы погибли!")
         
         
 def player_dodge(player, mob_id):
    damage_taken = int(mob_id.mob_damage * 0.50)
-   player.hp -= damage_taken
-   print (f"Вы увернулись и получили {damage_taken} Урона!")
+   player.hp = max(0, player.hp - damage_taken)
+   ui.say (f"Вы увернулись и получили {damage_taken} Урона!")
     
     
-        
+
         
 def start_battle(mob_id, player):
     mob_id.mob_hp = mob_id.mob_max_hp
-    print(f"--- Начался бой с {mob_id.mob_name}! ---")
+    ui.title(f"--- Начался бой с {mob_id.mob_name}! ---")
     
     # Этот цикл крутится ДО ТЕХ ПОР, пока оба живы
     while player.hp > 0 and mob_id.mob_hp > 0:
-        user_input_battle = input("Действие (Атаковать / Увернуться / Бежать): ").lower().strip()
+        command = ui.choose("Ваши действия:",[
+            ("Атаковать","attack"),
+            ("Увернуться","dodge"),
+            ("Пытаться сбежать","run"),
+            ],cancel_value="quit")
         
-        if user_input_battle == 'атаковать':
+        if command == 'attack':
             total_damage = calculate_damage_player(player.damage, player.crit_chance)
             damage_of_mobs(mob_id, total_damage, player)
             
@@ -99,15 +106,13 @@ def start_battle(mob_id, player):
                 
             damage_of_player(mob_id, player)
                
-        elif user_input_battle == 'увернуться':  
+        elif command == 'dodge':  
             player_dodge(player, mob_id)
             
-        elif user_input_battle == 'бежать':
-            print("Вы сбежали!")
+        elif command == 'run':
+            ui.say("Вы сбежали!")
             return "fled" # Тут return уместен, так как мы прерываем бой
     
-        else:
-            print('Неизвестное действие!')
 
     # --- ВАЖНО: ЭТОТ БЛОК ДОЛЖЕН БЫТЬ ВНЕ WHILE ---
     # Видишь? Он стоит на одном уровне с 'while', а не внутри него.
@@ -117,30 +122,53 @@ def start_battle(mob_id, player):
         return "win"
 
     
-def add_items_backpack(player, item_id):
-    if item_id in player.backpack:
-        player.backpack [item_id] += 1
-    else:
-        player.backpack [item_id] = 1
+def remove_item_backpack(player, item_id, count=1):
+    if player.backpack.get(item_id, 0) < count:
+        return False
+    player.backpack[item_id] -= count
+    if player.backpack[item_id] <= 0:
+        del player.backpack[item_id]   # пустую запись убираем, иначе в списке будет "0 шт."
+    return True
+
+def add_items_backpack(player, item_id, count=1):
+    player.backpack[item_id] = player.backpack.get(item_id, 0) + count
+
+def use_potion(player, item_id):
+    item = database.items_registry[item_id]
+    if player.hp >= player.max_hp:
+        ui.say("Здоровье уже полное.")
+        return
+    remove_item_backpack(player, item_id)
+    before = player.hp
+    player.hp = min(player.max_hp, player.hp + item.item_heal_value)
+    ui.say(f"Выпито: {item.item_name}. +{player.hp - before} HP")
         
         
-def reward_player(player, mob_id):
-    loot_list = mob_id.mob_loot_table
-    for item in loot_list:
-        add_items_backpack(player, item)
+
+    
+
+def roll_loot(mob):
+    """Бросает кубик по таблице лута. Возвращает {id предмета: количество}."""
+    drops = {}
+    for entry in mob.mob_loot_table:
+        if random.random() < entry.get("chance", 1.0):
+            count = random.randint(entry.get("min", 1), entry.get("max", 1))
+            drops[entry["item"]] = drops.get(entry["item"], 0) + count
+    return drops
+
     
     
 def save_game(player_obj):
     data = player_obj.to_dict()
     with open("player_save.json", "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
-        print("Прогресс успешно сохранен!")
+        ui.say("Прогресс успешно сохранен!")
      
 def load_game():
-    import os
+    
     # Проверяем, существует ли файл И не пустой ли он
     if not os.path.exists("player_save.json") or os.path.getsize("player_save.json") == 0:
-        print("Файл сохранений пуст или отсутствует.")
+        ui.say("Файл сохранений пуст или отсутствует.")
         return None
     
     try:
@@ -167,11 +195,11 @@ def load_game():
             new_hero.spells = data["spells"]
             new_hero.skills = data["skills"]
             new_hero.backpack = data["backpack"]
-            
+            new_hero.current_location = data["current_location"]
             return new_hero
     except json.JSONDecodeError:
-        print("Ошибка: Файл сохранения поврежден!")
+        ui.say("Ошибка: Файл сохранения поврежден!")
         return None
     except Exception as e:
-        print(f"Непредвиденная ошибка при загрузке: {e}")
+        ui.say(f"Непредвиденная ошибка при загрузке: {e}")
         return None

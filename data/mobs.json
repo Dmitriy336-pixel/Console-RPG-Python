@@ -1,0 +1,24 @@
+{
+    "id:mob_slime": {
+        "name": "Слизень",
+        "hp": 5,
+        "damage": 2,
+        "behavior": "aggressive",
+        "exp": 3,
+        "locations": {"forest": 5},
+        "loot": [
+            { "item": "id:small_healing_potion", "chance": 1.0 }
+        ]
+    },
+    "id:mob_big_slime": {
+        "name": "Большой слизень",
+        "hp": 10,
+        "damage": 8,
+        "behavior": "aggressive",
+        "exp": 3,
+        "locations": {"forest": 1},
+        "loot": [
+            
+        ]
+    }
+}

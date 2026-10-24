@@ -1,26 +1,28 @@
 import engine
 import database
 import random
+from ui import ui
+location_mobs = {
+    "forest": database.forest_mobs
+}
+
 def run(player):
-    print("\n=== ВСТРЕЧА ===")
+    ui.title("\n=== ВСТРЕЧА ===")
 
-    possible_mobs = [
-        database.slime,
-        database.big_slime,
-    ]
+    mobs = location_mobs.get(player.current_location, database.forest_mobs)
+    mob = database.pick_mob("forest")
+    
 
-    mob = random.choice(possible_mobs)
-    mob.mob_hp = mob.mob_max_hp
-    print(f"Из-за кустов выпрыгивает {mob.mob_name}!")
+    ui.say(f"Из-за кустов выпрыгивает {mob.mob_name}!")
 
     result = engine.start_battle(mob, player)
 
     if result == "win":
-        print("Ты победил! Возвращаешься в лес.")
+        ui.say("Ты победил! Возвращаешься в лес.")
         return "forest"
 
     elif result == "fled":
-        print("Ты сбежал обратно в лес.")
+        ui.say("Ты сбежал обратно в лес.")
         return "forest"
 
     elif result == "dead":

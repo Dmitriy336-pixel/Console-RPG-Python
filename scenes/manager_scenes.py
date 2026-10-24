@@ -1,11 +1,12 @@
 from scenes.world import forest, encounter, game_over
-from scenes.ui import inventory, character_info
+from scenes.ui import inventory, character_info, use_items
 
 def play_game(hero):
     scene_map = {
     #интерфейс
     "inventory": inventory.run,
     "character_info": character_info.run,
+    
     #мир 
     "forest": forest.run,
     "encounter": encounter.run,
