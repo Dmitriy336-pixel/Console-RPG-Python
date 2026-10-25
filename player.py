@@ -33,26 +33,36 @@ class Player:
         
         
     def to_dict(self):
-        return{
-        "name": self.player_name,
-        "hp": self.hp,
-        "max_hp": self.max_hp,
-        "endurance": self.endurance,
-        "max_endurance": self.max_endurance,
-        "max_mana": self.max_mana,
-        "mana": self.mana,
-        "lvl_mana": self.lvl_mana,
-        "exp_mana": self.exp_mana,
-        "max_exp_mana": self.max_exp_mana,
-        "damage": self.damage,
-        "crit_chance": self.crit_chance,
-        "defense": self.defense,
-        "lvl_player": self.lvl_player,
-        "exp_lvl_player": self.exp_lvl_player,
-        "max_exp_lvl_player": self.max_exp_lvl_player,
-        "equipment": self.equipment,
-        "spells": self.spells,
-        "skills": self.skills,
-        "backpack": self.backpack,
-        "current_location": self.current_location
-    }
+        return {
+            "name": self.player_name,
+            "hp": self.hp,
+            "max_hp": self.max_hp,
+            "endurance": self.endurance,
+            "max_endurance": self.max_endurance,
+            "max_mana": self.max_mana,
+            "mana": self.mana,
+            "lvl_mana": self.lvl_mana,
+            "exp_mana": self.exp_mana,
+            "max_exp_mana": self.max_exp_mana,
+            "damage": self.damage,
+            "crit_chance": self.crit_chance,
+            "defense": self.defense,
+            "lvl_player": self.lvl_player,
+            "exp_lvl_player": self.exp_lvl_player,
+            "max_exp_lvl_player": self.max_exp_lvl_player,
+            "equipment": self.equipment,
+            "spells": self.spells,
+            "skills": self.skills,
+            "backpack": self.backpack,
+            "current_location": self.current_location,
+        }
+
+    @classmethod
+    def from_dict(cls, data):
+        hero = cls(data["name"])
+        for key, value in data.items():
+            if key == "name":
+                continue
+            if hasattr(hero, key):
+                setattr(hero, key, value)
+        return hero

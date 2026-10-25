@@ -1,4 +1,4 @@
-import engine
+import saves
 
 GLOBAL_OPTIONS = [
     ("Инвентарь","inventory"),
@@ -15,11 +15,11 @@ def handle_global(cmd, player, current_scene):
         return "character_info"
     
     elif cmd == "save":
-        engine.save_game(player)
+        saves.save_game(player)
         return current_scene
     
     elif cmd == "exit":
-        engine.save_game(player)
+        saves.save_game(player)
         return None
     
     return False

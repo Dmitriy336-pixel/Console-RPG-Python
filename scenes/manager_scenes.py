@@ -1,5 +1,5 @@
 from scenes.world import forest, encounter, game_over
-from scenes.ui import inventory, character_info, use_items
+from scenes.ui import inventory, character_info
 
 def play_game(hero):
     scene_map = {

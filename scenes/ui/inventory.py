@@ -1,8 +1,8 @@
 import database
-import engine
+
 import models
 from ui import ui
-
+from logic import inventory_main_logic
 PAGE_SIZE = 10
 
 
@@ -91,18 +91,18 @@ def item_screen(player, item_id):
         action = ui.choose("Что делаем?", options, cancel_value="back")
 
         if action == "use":
-            engine.use_potion(player, item_id)
+            inventory_main_logic.use_potion(player, item_id)
         elif action == "equip":
             slot = item.item_slots
             old = player.equipment.get(slot)
             if old:
-                engine.add_items_backpack(player, old)
-            engine.remove_item_backpack(player, item_id)
+                inventory_main_logic.add_items_backpack(player, old)
+            inventory_main_logic.remove_item_backpack(player, item_id)
             player.equipment[slot] = item_id
             ui.say(f"Надето: {item.item_name}")
         elif action == "drop":
             if ui.confirm(f"Выбросить {item.item_name}?"):
-                engine.remove_item_backpack(player, item_id)
+                inventory_main_logic.remove_item_backpack(player, item_id)
         elif action == "close":
             return "close"
         else:

@@ -1,4 +1,4 @@
-import engine
+import saves
 from ui import ui
 def run(player):
     ui.title("\n=== ГЕРОЙ ПАЛ В БОЮ ===")
@@ -9,7 +9,7 @@ def run(player):
         ])
 
     if choice == "load":
-        loaded = engine.load_game()
+        loaded = saves.load_game()
         if loaded:
             player.__dict__.update(loaded.__dict__)
             ui.say("Сохранение загружено!")

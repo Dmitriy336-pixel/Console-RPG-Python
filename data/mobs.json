@@ -16,7 +16,7 @@
         "damage": 8,
         "behavior": "aggressive",
         "exp": 3,
-        "locations": {"forest": 1},
+        "locations": {"forest": 4},
         "loot": [
             
         ]

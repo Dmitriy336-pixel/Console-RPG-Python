@@ -13,7 +13,7 @@
     "crit_chance": 0.1,
     "defense": 9,
     "lvl_player": 10,
-    "exp_lvl_player": 222,
+    "exp_lvl_player": 255,
     "max_exp_lvl_player": 460,
     "equipment": {
         "right_hand": "id:arc_en_ciel",
@@ -25,7 +25,7 @@
     "skills": [],
     "backpack": {
         "id:arc_en_ciel": 7,
-        "id:small_healing_potion": 138
+        "id:small_healing_potion": 145
     },
     "current_location": "forest"
 }

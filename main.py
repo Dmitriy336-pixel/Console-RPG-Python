@@ -1,5 +1,5 @@
 from player import Player
-import engine
+import saves
 from scenes.manager_scenes import play_game
 from ui import ui
 
@@ -21,7 +21,7 @@ if __name__ == "__main__":
             
         elif command == "load":
             ui.say("Поиск сохранений...")
-            hero = engine.load_game()
+            hero = saves.load_game()
             if hero:
                 play_game(hero) # Запускаем игру с загруженным героем
                 
