@@ -16,21 +16,21 @@ def calculate_damage_player(damage, crit_chance):
 
 
 # Функция применения урона к мобу
-def damage_of_mobs(mob_id, total_damage, player):
+def damage_of_mobs(mob, total_damage, player):
     # 1. Сначала вычитаем урон
-    mob_id.mob_hp -= total_damage
+    mob.mob_hp -= total_damage
     
     # 2. Проверяем, осталось ли HP
-    if mob_id.mob_hp <= 0:
-        mob_id.mob_hp = 0
-        ui.say(f"Существо {mob_id.mob_name} получило {total_damage} урона!")
-        ui.say(f"Существо {mob_id.mob_name} было убито!")
-        ui.say(f"Вы получили: {mob_id.mob_loot_exp} опыта!")
-        player.exp_lvl_player += mob_id.mob_loot_exp 
+    if mob.mob_hp <= 0:
+        mob.mob_hp = 0
+        ui.say(f"Существо {mob.mob_name} получило {total_damage} урона!")
+        ui.say(f"Существо {mob.mob_name} было убито!")
+        ui.say(f"Вы получили: {mob.mob_loot_exp} опыта!")
+        player.exp_lvl_player += mob.mob_loot_exp 
         leveling.lvl_up(player)
         
         # Если лут есть, показываем его
-        drops = roll_loot(mob_id)
+        drops = roll_loot(mob)
         if drops:
             names = ", ".join(f"{database.item_name(i)} x{n}" for i, n in drops.items())
             ui.say(f"Вы получили: {names}")
@@ -40,34 +40,34 @@ def damage_of_mobs(mob_id, total_damage, player):
                 
     else:
         # Если моб выжил, просто пишем остаток здоровья
-        ui.say(f"Существо {mob_id.mob_name} получило {total_damage} урона!")
-        ui.say(f"У существа {mob_id.mob_name} осталось: {mob_id.mob_hp} хп!")
+        ui.say(f"Существо {mob.mob_name} получило {total_damage} урона!")
+        ui.say(f"У существа {mob.mob_name} осталось: {mob.mob_hp} хп!")
 
 
 #function damage and mob
-def damage_of_player(mob_id, player):
-    player.hp -= mob_id.mob_damage
-    ui.say (f"Существо {player.player_name} получило {mob_id.mob_damage} урона!")
+def damage_of_player(mob, player):
+    player.hp -= mob.mob_damage
+    ui.say (f"Существо {player.player_name} получило {mob.mob_damage} урона!")
     ui.say(f"У существа {player.player_name} осталось: {player.hp} хп!")
     if player.hp <= 0:
         player.hp = 0
         ui.say ("вы погибли!")
         
         
-def player_dodge(player, mob_id):
-   damage_taken = int(mob_id.mob_damage * 0.50)
+def player_dodge(player, mob):
+   damage_taken = int(mob.mob_damage * 0.50)
    player.hp = max(0, player.hp - damage_taken)
    ui.say (f"Вы увернулись и получили {damage_taken} Урона!")
     
     
 
         
-def start_battle(mob_id, player):
-    mob_id.mob_hp = mob_id.mob_max_hp
-    ui.title(f"--- Начался бой с {mob_id.mob_name}! ---")
+def start_battle(mob, player):
+    mob.mob_hp = mob.mob_max_hp
+    ui.title(f"--- Начался бой с {mob.mob_name}! ---")
     
     # Этот цикл крутится ДО ТЕХ ПОР, пока оба живы
-    while player.hp > 0 and mob_id.mob_hp > 0:
+    while player.hp > 0 and mob.mob_hp > 0:
         command = ui.choose("Ваши действия:",[
             ("Атаковать","attack"),
             ("Увернуться","dodge"),
@@ -76,17 +76,17 @@ def start_battle(mob_id, player):
         
         if command == 'attack':
             total_damage = calculate_damage_player(player.damage, player.crit_chance)
-            damage_of_mobs(mob_id, total_damage, player)
+            damage_of_mobs(mob, total_damage, player)
             
             # Проверяем: если моб УЖЕ умер после нашей атаки, 
             # мы НЕ даем ему бить в ответ и выходим из цикла
-            if mob_id.mob_hp <= 0:
+            if mob.mob_hp <= 0:
                 break 
                 
-            damage_of_player(mob_id, player)
+            damage_of_player(mob, player)
                
         elif command == 'dodge':  
-            player_dodge(player, mob_id)
+            player_dodge(player, mob)
             
         elif command == 'run':
             ui.say("Вы сбежали!")
